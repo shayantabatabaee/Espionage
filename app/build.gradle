@@ -1,0 +1,48 @@
+apply plugin: 'com.android.application'
+apply from: "$project.rootDir/tools/script-git-version.gradle"
+
+android {
+   
+    compileSdkVersion 23
+    buildToolsVersion '25.0.0'
+    defaultConfig {
+        applicationId "com.gravity.andorid"
+        minSdkVersion 19
+        targetSdkVersion 23
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+    
+        }
+    }
+    dexOptions {
+        javaMaxHeapSize "4g"
+    }
+
+    productFlavors {
+        dev {
+            
+            versionCode gitVersionCodeTime
+            versionName gitVersionName
+        }
+
+        prod {
+            
+            versionCode gitVersionCode
+            versionName gitVersionName
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile 'com.android.support:appcompat-v7:24.0.0'
+    compile 'com.google.firebase:firebase-messaging:10.0.1'
+    compile 'com.buddy:androidsdk:3.0.0'
+    compile 'com.google.code.gson:gson:2.7'
+}
+apply plugin: 'com.google.gms.google-services'
+
